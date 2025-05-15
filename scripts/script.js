@@ -4,6 +4,7 @@ let profilePicturePath = "assets/profile/pp.jpg";
 
 //Posts Path.
 const imageAssets = [
+    "120.png","119.png","118.png",
     "117.png", "117_1.png", "117_2.png", "117_3.png", "117_4.png", "117_5.png",
     "116.png", "116_1.png", "116_2.png", "116_3.png", "116_4.png", "116_5.png", "116_6.png",
     "115.png", "115_1.png", "115_2.png", "115_3.png", "115_4.png",
