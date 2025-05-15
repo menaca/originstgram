@@ -1,0 +1,79 @@
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="stylesheet" href="styles/style.css"> 
+  <title>Originstagram</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="navbar">
+      <div>&larr;</div>
+      <div>menapps</div>
+      <button class="theme-toggle" id="themeToggle">🌙</button>
+    </div>
+
+    <div class="profile">
+      <img id="profile-image" src="" alt="Profil Fotoğrafı">
+      <div class="info-block">
+        <div class="bio">
+          <div style="font-weight: bold;">MENAPPS</div>
+          <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+            <a href="https://instagram.com/realmenaca" target="_blank">@realmenaca</a>
+            <a href="https://instagram.com/menapps" target="_blank">@menapps</a>
+          </div>
+          <div>DevelopBlog</div>
+          <a href="https://github.com/menaca" target="_blank">github.com/menaca</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabs-container">
+      <div class="tabs-header">
+        <div class="tab active" data-tab="photos">📷 Posts</div>
+        <div class="tab" data-tab="links">🔗 Linkler</div>
+        <div class="tab-indicator"></div>
+      </div>
+
+      <div class="tabs-content" id="tabsContent">
+        <div class="tab-panel active" data-tab-content="photos">
+          <div class="grid" id="imageGrid"></div>
+        </div>
+
+
+
+        <div class="tab-panel" data-tab-content="links">
+          <div class="links-list" id="links-list">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <button class="close-btn" id="closeBtn">&times;</button>
+    </div>
+    <div class="modal-content">
+      <div class="modal-images-container">
+        <div class="indicator" id="imageIndicator">1/1</div>
+        <div class="modal-images" id="modalImages"></div>
+        <div class="modal-nav">
+          <button class="modal-nav-btn" id="prevBtn">&#10094;</button>
+          <button class="modal-nav-btn" id="nextBtn">&#10095;</button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="modal-info">
+          <div class="modal-username" id="modalUsername"></div>
+          <div class="modal-description" id="modalDescription"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <script src="scripts/script.js"></script> 
+</body>
+
+</html>
