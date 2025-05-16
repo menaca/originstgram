@@ -430,59 +430,7 @@ tabs.forEach(tab => {
     });
 });
 
-tabsContent.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-    currentTranslate = getCurrentTranslate();
-    isDraggingTab = true;
-});
 
-tabsContent.addEventListener('touchmove', (e) => {
-    if (!isDraggingTab) return;
-    const currentX = e.touches[0].clientX;
-    const diff = currentX - startX;
-    const newTranslate = currentTranslate + diff;
-
-    const maxTranslate = (tabs.length - 1) * 100;
-    const boundedTranslate = Math.max(0, Math.min(maxTranslate, newTranslate / window.innerWidth * 100));
-
-    tabsContent.style.transform = `translateX(-${boundedTranslate}%)`;
-    tabIndicator.style.transform = `translateX(${boundedTranslate / 2}%)`;
-});
-
-tabsContent.addEventListener('touchend', (e) => {
-    if (!isDraggingTab) return;
-    isDraggingTab = false;
-
-    const currentX = e.changedTouches[0].clientX;
-    const diff = currentX - startX;
-
-    if (Math.abs(diff) > 50) {
-        const currentIndex = getCurrentTabIndex();
-        let newIndex;
-
-        if (diff > 0) {
-            newIndex = Math.max(0, currentIndex - 1);
-        } else {
-            newIndex = Math.min(tabs.length - 1, currentIndex + 1);
-        }
-
-        const newTab = tabs[newIndex].dataset.tab;
-        setActiveTab(newTab);
-    } else {
-        setActiveTab(currentTab);
-    }
-});
-
-function getCurrentTranslate() {
-    const transform = window.getComputedStyle(tabsContent).transform;
-    if (transform === 'none') return 0;
-    const matrix = transform.match(/^matrix\((.+)\)$/);
-    return matrix ? parseFloat(matrix[1].split(', ')[4]) : 0;
-}
-
-function getCurrentTabIndex() {
-    return Array.from(tabs).findIndex(tab => tab.classList.contains('active'));
-}
 
 toggleBtn.addEventListener('click', () => {
     document.body.classList.toggle('light-mode');
