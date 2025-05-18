@@ -140,7 +140,7 @@ body {
 
 
 .tabs-content {
-    display: flex;
+    display: block;
     width: 200%;
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -150,10 +150,9 @@ body {
     width: 50%;
     flex-shrink: 0;
     overflow: hidden;
-    min-height: 100vh;
+    min-height: auto;
+
 }
-
-
 
 .grid {
     display: grid;

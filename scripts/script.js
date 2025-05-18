@@ -2,6 +2,8 @@
 let username = "menapps";
 let profilePicturePath = "assets/profile/pp.jpg";
 
+const pinnedPostIds = ["117", "116", "115"]; // max 3 olacak şekilde buraya sabitlenmiş post ID'lerini yaz
+
 //Posts Path.
 const imageAssets = [
     "120.png","119.png","118.png",
@@ -281,19 +283,76 @@ if (currentImageList.length > 0) {
     });
 }
 
+function sortPosts() {
+    const pinned = [];
+    const normal = [];
+
+    posts.forEach(post => {
+        const postId = post.images[0].split('_')[0].replace(/\D/g, '');
+        if (pinnedPostIds.includes(postId)) {
+            pinned.push(post);
+        } else {
+            normal.push(post);
+        }
+    });
+
+    return [...pinned, ...normal];
+}
+
 function renderPosts() {
     imageGrid.innerHTML = '';
-    posts.forEach((post, index) => {
+    const sortedPosts = sortPosts();
+
+    sortedPosts.forEach((post, index) => {
+        const container = document.createElement('div');
+        container.classList.add('post-container');
+        container.style.position = 'relative';
+
         const img = document.createElement('img');
         img.src = 'assets/posts/' + post.images[0];
         img.loading = 'lazy';
         img.addEventListener('click', () => openModal(index));
-        imageGrid.appendChild(img);
+        container.appendChild(img);
+
+        const postId = post.images[0].split('_')[0].replace(/\D/g, '');
+
+        if (pinnedPostIds.includes(postId)) {
+            const pinIcon = document.createElement('div');
+            pinIcon.innerHTML = `<svg width="15" height="15" id="Capa_1" fill="#fff" xmlns="http://www.w3.org/2000/svg" 
+  viewBox="0 0 489.493 489.493" xml:space="preserve"> <path d="M485.322,117.705c12.204-12.238-3.274-47.577-34.636-78.93c-30.99-30.99-65.76-46.396-78.401-34.941l-0.246-0.236
+ l-173.715,156.02c-32.117-27.993-80.684-27.038-111.278,3.534c-5.149,5.157-8.051,12.146-8.051,19.437
+ c0,7.292,2.901,14.283,8.051,19.431l78.808,78.801L3.902,463.627c-5.148,5.799-5.262,14.655,0.015,20.601
+ c5.689,6.403,15.497,6.992,21.916,1.294l182.575-162.137l7.84,7.829l40.601,40.603l0,0l30.336,30.329
+ c5.15,5.147,12.139,8.039,19.424,8.039c7.278,0,14.272-2.898,19.419-8.056c30.561-30.573,31.524-79.158,3.539-111.27L484.771,118.03
+ C484.927,117.892,485.177,117.861,485.322,117.705z"/> </svg>`;
+            pinIcon.style.position = 'absolute';
+            pinIcon.style.top = '10px';
+            pinIcon.style.right = '10px';
+            pinIcon.style.filter = 'drop-shadow(0 0 2px rgba(0,0,0,0.5))';
+            container.appendChild(pinIcon);
+        }
+        
+        else if (post.images.length > 1) {
+            const multiIcon = document.createElement('div');
+            multiIcon.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20" fill="#fff" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17 13.5V14.37C17 15.82 15.82 17 14.37 17H9.62C7.75 17 7 16.25 7 14.37V9.62C7 8.17 8.17 7 9.62 7H10.5V10.5C10.5 12.16 11.84 13.5 13.5 13.5H17Z"/>
+                <path d="M22 4.62V9.37C22 11.25 21.25 12 19.37 12H14.62C12.75 12 12 11.25 12 9.37V4.62C12 2.75 12.75 2 14.62 2H19.37C21.25 2 22 2.75 22 4.62Z"/>
+            </svg>`;
+            multiIcon.style.position = 'absolute';
+            multiIcon.style.top = '10px';
+            multiIcon.style.right = '10px';
+            multiIcon.style.filter = 'drop-shadow(0 0 2px rgba(0,0,0,0.5))';
+            container.appendChild(multiIcon);
+        }
+
+        imageGrid.appendChild(container);
     });
 }
 
+
 function openModal(postIndex) {
-    currentPost = posts[postIndex];
+    const sorted = sortPosts();
+    currentPost = sorted[postIndex];
     currentImageIndex = 0;
     renderModalImages();
     updateModal();
